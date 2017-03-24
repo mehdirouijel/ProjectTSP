@@ -21,6 +21,16 @@ City
     }
     
     
+    public double
+    distanceTo( City to )
+    {
+        int a = Math.abs( this.x - to.x );
+        int b = Math.abs( this.y - to.y );
+        double distance = Math.sqrt( a*a + b*b );
+        
+        return distance;
+    }
+    
     public void
     draw()
     {

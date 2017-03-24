@@ -1,9 +1,15 @@
+/*
+ *  This class is just used to draw all the
+ *  possible roads. It's kind of useless really...
+ *
+ * * * * * * * * * * * * * * * * * * * */
+
+
 public class
 Road
 {
     public City from;
     public City to;
-    public double distance;
     
     
     public
@@ -11,10 +17,6 @@ Road
     {
         this.from = theFrom;
         this.to = theTo;
-        
-        int a = to.x - from.x;
-        int b = to.y - from.y;
-        this.distance = Math.sqrt( a*a + b*b );
     }
     
     
@@ -24,6 +26,7 @@ Road
         stroke( 190 );
         strokeCap( SQUARE );
         line( from.x, from.y, to.x, to.y );
+        stroke( 0 );
     }
     
 }
