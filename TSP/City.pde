@@ -4,11 +4,12 @@ City
     int x;
     int y;
     
+    
     public
     City()
     {
-        this.x = ( int )( Math.random() * width );
-        this.y = ( int )( Math.random() * height );
+        this.x = ( int )( LEFT_PANEL_WIDTH + Math.random() * width );
+        this.y = ( int )( LEFT_PANEL_WIDTH + Math.random() * height );
     }
     
     public
@@ -16,5 +17,15 @@ City
     {
         this.x = theX;
         this.y = theY;
+        this.y = theY;
+    }
+    
+    
+    public void
+    draw()
+    {
+        fill( 0 );
+    
+        ellipse( x, y, 8, 8 );
     }
 }
