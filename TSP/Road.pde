@@ -23,7 +23,7 @@ Road
     public void
     draw()
     {
-        stroke( 190 );
+        stroke( 180 );
         strokeCap( SQUARE );
         line( from.x, from.y, to.x, to.y );
         stroke( 0 );

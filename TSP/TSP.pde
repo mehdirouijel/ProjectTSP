@@ -19,6 +19,8 @@ boolean runGenetic = false;
 boolean runAntColony = false;
 City bestPath = null;
 
+float lerpAmount = 0.0;
+
 
 void
 setup()
@@ -112,6 +114,32 @@ draw()
             println( "-----------------------" );
             noLoop();
         }
+    }
+    
+    
+    if ( runAntColony )
+    {
+        int x1 = 350;
+        int y1 = 150;
+        int x2 = 460;
+        int y2 = 280;
+        float x = lerp( x1, x2, lerpAmount );
+        float y = lerp( y1, y2, lerpAmount );
+        
+        stroke( 180 );
+        strokeWeight( 3 );
+        strokeCap( SQUARE );
+        line( x1, y1, x2, y2 );
+        strokeWeight( 1 );
+        
+        if ( lerpAmount <= 1.0 )
+            lerpAmount += 0.03;
+        else
+            lerpAmount = 0.0;
+            
+        stroke( 0 );
+        lerp( x, y, lerpAmount );
+        ellipse( x, y, 1, 1 );
     }
 }
 
