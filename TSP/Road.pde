@@ -10,6 +10,8 @@ Road
 {
     public City from;
     public City to;
+    // NOTE: We're going to need a value of pheromones between 0 and 1, I think.
+    public float pheromones;
     
     
     public
@@ -17,6 +19,18 @@ Road
     {
         this.from = theFrom;
         this.to = theTo;
+        this.pheromones = 1.0;
+    }
+    
+    
+    public double
+    getDistance()
+    {
+        double distance = 0.0;
+        
+        distance = from.distanceTo( to );
+        
+        return distance;
     }
     
     
@@ -27,6 +41,18 @@ Road
         strokeCap( SQUARE );
         line( from.x, from.y, to.x, to.y );
         stroke( 0 );
+    }
+    
+    public void
+    draw( int r, int g, int b, int weight )
+    {
+        stroke( r, g, b );
+        strokeWeight( weight );
+        strokeCap( SQUARE );
+        line( from.x, from.y, to.x, to.y );
+        
+        stroke( 0 );
+        strokeWeight( 1 );
     }
     
 }

@@ -11,8 +11,8 @@
 
 final static int LEFT_PANEL_WIDTH = 192;
 
-ArrayList< City > cities = new ArrayList();
-ArrayList< Road > roads = new ArrayList();
+static ArrayList< City > cities = new ArrayList();
+static ArrayList< Road > roads = new ArrayList();
 Genetic GA = null;
 AntColony ACO = null;
 boolean runGenetic = false;
@@ -28,6 +28,7 @@ setup()
     size( 768, 432 );
     background( 255 );
     frameRate( 60 );
+    hint(ENABLE_STROKE_PURE);
 }
 
 void
@@ -119,6 +120,7 @@ draw()
     
     if ( runAntColony )
     {
+        /*
         int x1 = 350;
         int y1 = 150;
         int x2 = 460;
@@ -140,6 +142,19 @@ draw()
         stroke( 0 );
         lerp( x, y, lerpAmount );
         ellipse( x, y, 1, 1 );
+        */
+        
+        ACO.run();
+        /*
+        for ( Road r : ACO.ants.get( 0 ).possibleRoads )
+        {
+            r.draw( 0, 200, 180 );
+            
+            stroke( 0 );
+            //noLoop();
+        }
+        */
+        noLoop();
     }
 }
 
@@ -193,6 +208,9 @@ mouseClicked()
             
             runAntColony = true;
             runGenetic = false;
+            
+            ACO = null;
+            ACO = new AntColony();
             
             loop();
         }
