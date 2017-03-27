@@ -13,13 +13,11 @@ final static int LEFT_PANEL_WIDTH = 192;
 
 static ArrayList< City > cities = new ArrayList();
 static ArrayList< Road > roads = new ArrayList();
+
 Genetic GA = null;
 AntColony ACO = null;
 boolean runGenetic = false;
 boolean runAntColony = false;
-City bestPath = null;
-
-float lerpAmount = 0.0;
 
 
 void
@@ -86,6 +84,9 @@ draw()
         cities.get( i ).draw();
     
     
+    /* Running the algorithms.
+     * * * * */
+    
     if ( runGenetic )
     {
         if ( GA.pop != null )
@@ -113,48 +114,39 @@ draw()
         {
             runGenetic = false;
             println( "-----------------------" );
-            noLoop();
+            noLoop(); //<>//
         }
     }
     
     
     if ( runAntColony )
     {
-        /*
-        int x1 = 350;
-        int y1 = 150;
-        int x2 = 460;
-        int y2 = 280;
-        float x = lerp( x1, x2, lerpAmount );
-        float y = lerp( y1, y2, lerpAmount );
+        fill( 100 );
+        rect( LEFT_PANEL_WIDTH+2, 1, 120, 16 );
+        fill( 250 );
+        text( "Iteration "+ACO.currentIteration+" / "+AntColony.MAX_ITERATIONS,
+              LEFT_PANEL_WIDTH+4, 2, 130, 16 );
         
-        stroke( 180 );
-        strokeWeight( 3 );
-        strokeCap( SQUARE );
-        line( x1, y1, x2, y2 );
-        strokeWeight( 1 );
-        
-        if ( lerpAmount <= 1.0 )
-            lerpAmount += 0.03;
-        else
-            lerpAmount = 0.0;
-            
-        stroke( 0 );
-        lerp( x, y, lerpAmount );
-        ellipse( x, y, 1, 1 );
-        */
-        
-        ACO.run();
-        /*
-        for ( Road r : ACO.ants.get( 0 ).possibleRoads )
+        if ( ACO.currentIteration < AntColony.MAX_ITERATIONS )
         {
-            r.draw( 0, 200, 180 );
+            ACO.run();
+            ACO.updatePheromones();
             
-            stroke( 0 );
-            //noLoop();
+            ACO.getBestPath().draw();
+            println( "Best distance = "+ACO.getBestPath().getTotalDistance() );
+            
+            fill( 250 );
+            text( "Total Distance:\n"+ACO.getBestPath().getTotalDistance(),
+                  5, 100, LEFT_PANEL_WIDTH-10, 50 );
+                  
+            ACO.currentIteration++;
         }
-        */
-        noLoop();
+        else
+        {
+            runAntColony = false;
+            println( "-----------------------" );
+            noLoop(); //<>//
+        }
     }
 }
 

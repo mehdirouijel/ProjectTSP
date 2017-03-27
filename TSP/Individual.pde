@@ -37,6 +37,11 @@ Individual
         }
     }
     
+    public
+    Individual()
+    {
+    }
+    
     
     public double
     getTotalDistance()

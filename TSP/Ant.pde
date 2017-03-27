@@ -9,20 +9,56 @@ Ant extends Individual
 {
     
     public City currentCity = null;
+    public City startingCity = null;
     public Road currentRoad = null;
     public ArrayList< Road > possibleRoads = new ArrayList();
-    public ArrayList< Road > pathSoFar = new ArrayList();
+    public ArrayList< Road > roadSoFar = new ArrayList();
+    public float pheromonePool = 100.0; // NOTE: Will be used as 'alpha' parameter for the line color.
     
     
     public
     Ant()
     {
-        super( true );
+        super();
         
         int cityIndex = ( int )( Math.random() * cities.size() );
-        this.currentCity = cities.get( cityIndex );
+        this.startingCity = cities.get( cityIndex );
+        this.currentCity = this.startingCity;
     }
     
+    
+    public void
+    backtrack()
+    {
+        for ( Road r : this.roadSoFar )
+        {
+            r.pheromones += this.pheromonePool / this.roadSoFar.size();
+            
+            r.draw( 255, 255, 255, r.pheromones, 3 );
+        }
+    }
+    
+    public void
+    findPath()
+    {        
+        while ( this.path.size() < cities.size()-1 )
+        {
+            this.currentCity = chooseNext(); //<>//
+        }
+        
+        /* Now we need to add the last road (to the first city)
+         * to complete the loop.
+         * * * * */
+        
+        for ( Road r : roads )
+        {
+            if ( ( currentCity == r.from ) && ( this.startingCity == r.to ) ||
+                 ( currentCity == r.to ) && ( this.startingCity == r.from ) )
+            {
+                this.roadSoFar.add( r );
+            }
+        }
+    }
     
     public City
     chooseNext()
@@ -38,43 +74,34 @@ Ant extends Individual
          * The heuristic used is the length of a road.
          * * * * */
         
-        double denominator = 0.0;
-        for ( int i = 0; i < possibleRoads.size(); ++i )
+        double totalWeight = 0.0;
+        for ( Road r : this.possibleRoads )
         {
-            Road r = possibleRoads.get( i );
-            
-            denominator += Math.pow( r.pheromones, AntColony.PHEROMONE_BIAS ) * Math.pow( ( 1.0 / r.getDistance() ), AntColony.HEURISTIC_BIAS );
+            totalWeight += Math.pow( r.pheromones, AntColony.PHEROMONE_BIAS ) * Math.pow( ( 1.0 / r.getDistance() ), AntColony.HEURISTIC_BIAS );
         }
         
-        double numerator = 0.0;
+        double roadWeight = 0.0; //<>//
         int destinationIndex = 0;
-        while ( true )
+        double diceThrow = Math.random() * totalWeight;
+         //<>//
+        for ( Road r : this.possibleRoads )
         {
-            Road r = possibleRoads.get( destinationIndex );
-            
-            numerator = Math.pow( r.pheromones, AntColony.PHEROMONE_BIAS ) * Math.pow( ( 1.0 / r.getDistance() ), AntColony.HEURISTIC_BIAS );
-            
-            double p = numerator / denominator;
-            
-            if ( p >= Math.random() )
+            roadWeight += Math.pow( r.pheromones, AntColony.PHEROMONE_BIAS ) * Math.pow( ( 1.0 / r.getDistance() ), AntColony.HEURISTIC_BIAS );
+            if ( roadWeight >= diceThrow )
                 break;
-                
+            
             destinationIndex++;
-            destinationIndex %= possibleRoads.size();
         }
         
         
-        Road chosenRoad = possibleRoads.get( destinationIndex );
+        Road chosenRoad = this.possibleRoads.get( destinationIndex );
         
-        pathSoFar.add( chosenRoad );
+        roadSoFar.add( chosenRoad );
         
-        if ( this.currentCity == possibleRoads.get( destinationIndex ).from )
+        if ( this.currentCity == this.possibleRoads.get( destinationIndex ).from )
             choice = chosenRoad.to;
-        else if ( this.currentCity == possibleRoads.get( destinationIndex ).to )
+        else if ( this.currentCity == this.possibleRoads.get( destinationIndex ).to )
             choice = chosenRoad.from;
-            
-        chosenRoad.draw( 255, 255, 0, 1 );
-        
         
         return choice;
     }
@@ -82,21 +109,43 @@ Ant extends Individual
     private void
     findPossibleRoads()
     {
-        for ( City c : cities )
+        this.possibleRoads.clear();
+        
+        for ( Road r : roads )
         {
-            if ( !( this.path.contains( c ) ) )
+            if ( this.currentCity == r.from )
             {
-                for ( Road r : roads )
-                {
-                    if ( ( currentCity == r.from ) && ( c == r.to ) ||
-                         ( currentCity == r.to ) && ( c == r.from ) )
-                    {
-                        this.possibleRoads.add( r );
-                        r.draw( 0, 200, 180, 3 );
-                    }
-                }
+                if ( !( this.path.contains( r.to ) ) ) 
+                    this.possibleRoads.add( r );
+            }
+            else if ( this.currentCity == r.to )
+            {
+                if ( !( this.path.contains( r.from ) ) ) 
+                    this.possibleRoads.add( r );
             }
         }
+    }
+    
+    @Override
+    public double
+    getTotalDistance()
+    {
+        double result = 0.0;
+        
+        for ( Road r : this.roadSoFar )
+        {
+            result += r.getDistance();
+        }
+        
+        return result;
+    }
+    
+    @Override
+    public void
+    draw()
+    {
+        for ( Road r : this.roadSoFar )
+            r.draw( 255, 255, 0, 1 );
     }
 
 }

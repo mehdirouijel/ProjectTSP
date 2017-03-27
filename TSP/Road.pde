@@ -37,7 +37,7 @@ Road
     public void
     draw()
     {
-        stroke( 180 );
+        stroke( 190 );
         strokeCap( SQUARE );
         line( from.x, from.y, to.x, to.y );
         stroke( 0 );
@@ -47,6 +47,18 @@ Road
     draw( int r, int g, int b, int weight )
     {
         stroke( r, g, b );
+        strokeWeight( weight );
+        strokeCap( SQUARE );
+        line( from.x, from.y, to.x, to.y );
+        
+        stroke( 0 );
+        strokeWeight( 1 );
+    }
+    
+    public void
+    draw( int r, int g, int b, float a, int weight )
+    {
+        stroke( r, g, b, a );
         strokeWeight( weight );
         strokeCap( SQUARE );
         line( from.x, from.y, to.x, to.y );
