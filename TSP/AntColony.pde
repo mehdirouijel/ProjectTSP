@@ -9,8 +9,8 @@ AntColony
 {
     
     private final static int POPULATION_SIZE = 20;
-    private final static int MAX_ITERATIONS = 100;
-    private final static float PHEROMONE_EVAPORATION_RATE = 0.5;
+    private final static int MAX_ITERATIONS = 200;
+    private final static float PHEROMONE_EVAPORATION_RATE = 0.2;
     public final static int PHEROMONE_BIAS = 1; // NOTE: Influence of the pheromones in choosing a path.
     public final static int HEURISTIC_BIAS = 2; // NOTE: Influence of heuristic in choosing a path.
     

@@ -147,6 +147,11 @@ draw()
             println( "-----------------------" );
             noLoop(); //<>//
         }
+        
+        ACO.getBestPath().draw();
+        fill( 250 );
+        text( "Total Distance:\n"+ACO.getBestPath().getTotalDistance(),
+              5, 100, LEFT_PANEL_WIDTH-10, 50 );
     }
 }
 
