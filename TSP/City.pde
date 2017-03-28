@@ -1,3 +1,12 @@
+/*
+ *  The definition of a city.
+ *
+ *
+ *  Created by: Mehdi Rouijel
+ *
+ * * * * * * * * * * * * * * * * * * * */
+
+
 public class
 City
 {

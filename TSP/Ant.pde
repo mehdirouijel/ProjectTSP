@@ -1,6 +1,9 @@
 /*
  *  Definition of an ant.
  *
+ *
+ *  Created by: Mehdi Rouijel
+ *
  * * * * * * * * * * * * * * * * * * * */
 
 
@@ -10,10 +13,9 @@ Ant extends Individual
     
     public City currentCity = null;
     public City startingCity = null;
-    public Road currentRoad = null;
     public ArrayList< Road > possibleRoads = new ArrayList();
     public ArrayList< Road > roadSoFar = new ArrayList();
-    public float pheromonePool = 100.0; // NOTE: Will be used as 'alpha' parameter for the line color.
+    public float pheromonePool = 50.0; // NOTE: Will be used as 'alpha' parameter for the line color.
     
     
     public

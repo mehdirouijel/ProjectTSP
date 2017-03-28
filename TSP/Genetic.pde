@@ -1,6 +1,9 @@
 /*
  *  The implementation of the genetic algorithm.
  *
+ *
+ *  Created by: Mehdi Rouijel
+ *
  * * * * * * * * * * * * * * * * * * * */
 
 
@@ -10,7 +13,7 @@ Genetic
     
     private final static int POPULATION_SIZE = 20;
     private final static int TOURNAMENT_SIZE = 5;
-    private final static double MUTATION_RATE = 0.02;
+    private final static double MUTATION_RATE = 0.02; // NOTE: A percentage chance for a gene (i.e. a city in an Individual's path) to be mutated (i.e. swapped with a random other one in that path)
     private final static boolean ELITISM = true;
     private final static int GENERATION_COUNT = 200;
     Population pop = null;
@@ -105,6 +108,10 @@ Genetic
          * Without it, the algorithm converges towards
          * a solution very early and is stuck without
          * examining other possible paths.
+         *
+         * Probably not the best name for this function, though.
+         * Maybe this should be "mutate" and the "mutate()"
+         * function below should be "evolve()" ? 
          * * * * */
          
         for ( int i = 0; i < circuit.path.size(); ++i )

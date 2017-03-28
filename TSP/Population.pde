@@ -2,6 +2,9 @@
  *  A Population represents all individuals in
  *  a generation.
  *
+ *
+ *  Created by: Mehdi Rouijel
+ *
  * * * * * * * * * * * * * * * * * * * */
 
 

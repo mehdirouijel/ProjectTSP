@@ -2,6 +2,9 @@
  *  In this implementation, an Individual
  *  is a path that connects all cities.
  *
+ *
+ *  Created by: Mehdi Rouijel
+ *
  * * * * * * * * * * * * * * * * * * * */
 
 import java.util.Collections;

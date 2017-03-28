@@ -19,6 +19,8 @@ AntColony ACO = null;
 boolean runGenetic = false;
 boolean runAntColony = false;
 
+int elapsedTime = 0;
+
 
 void
 setup()
@@ -112,6 +114,12 @@ draw()
         }
         else
         {
+            elapsedTime = millis() - elapsedTime;
+              
+            fill( 250 );
+            text( "Elapsed Time: "+elapsedTime+"ms",
+                  5, 150, LEFT_PANEL_WIDTH-10, 20 );
+            
             runGenetic = false;
             println( "-----------------------" );
             noLoop(); //<>//
@@ -143,6 +151,12 @@ draw()
         }
         else
         {
+            elapsedTime = millis() - elapsedTime;
+              
+            fill( 250 );
+            text( "Elapsed Time: "+elapsedTime+"ms",
+                  5, 150, LEFT_PANEL_WIDTH-10, 20 );
+            
             runAntColony = false;
             println( "-----------------------" );
             noLoop(); //<>//
@@ -191,6 +205,8 @@ mouseClicked()
             runAntColony = false;
             runGenetic = true;
             
+            elapsedTime = millis();
+            
             GA = null;
             GA = new Genetic();
             
@@ -205,6 +221,8 @@ mouseClicked()
             
             runAntColony = true;
             runGenetic = false;
+            
+            elapsedTime = millis();
             
             ACO = null;
             ACO = new AntColony();
